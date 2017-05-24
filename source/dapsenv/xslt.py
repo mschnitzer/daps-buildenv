@@ -25,6 +25,7 @@ _used_files_sheet_path = "{}/data/get-all-used-files.xsl".format(
     os.path.dirname(os.path.abspath(__file__))
 )
 
+
 def getAllUsedFiles(main, rootid):
     """Get all used files of an XML MAIN file
 
@@ -36,14 +37,12 @@ def getAllUsedFiles(main, rootid):
     xslt_tree = etree.parse(_used_files_sheet_path)
     transform = etree.XSLT(xslt_tree)
 
-    main_tree = etree.parse(
-        main,
-        etree.XMLParser(load_dtd=True,resolve_entities=True)
-    )
+    main_tree = etree.parse(main,
+                            etree.XMLParser(load_dtd=True, resolve_entities=True))
 
     result = transform(main_tree)
     rootid_elem = result.find("//div[@id='{}']".format(rootid))
-    
+
     if rootid_elem is None:
         raise InvalidRootIDException(rootid)
 

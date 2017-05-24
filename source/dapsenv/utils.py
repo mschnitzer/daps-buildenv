@@ -19,12 +19,11 @@
 import random
 import string
 
-def randomString(len):
-	"""Generates a random string
 
-	:param int len: Length of the generated string
-	:return string: Random string
-	"""
-	
-	return "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) \
-		for _ in range(len))
+def randomString(len):
+    """Generates a random string
+
+    :param int len: Length of the generated string
+    :return string: Random string
+    """
+    return "".join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(len))

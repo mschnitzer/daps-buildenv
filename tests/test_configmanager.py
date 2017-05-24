@@ -4,7 +4,7 @@ import pytest
 from __utils__ import make_tmp_file
 from dapsenv.exceptions import ConfigFileCreationPermissionErrorException, \
                                ConfigFileAlreadyExistsException
-from mock import patch
+from unittest.mock import patch
 
 test_data_dir = "{}/data".format(os.path.dirname(os.path.realpath(__file__)))
 

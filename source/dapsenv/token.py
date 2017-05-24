@@ -20,12 +20,12 @@ from dapsenv.exceptions import InvalidTokenLengthException, InvalidTokenCharsExc
 from dapsenv.general import CLIENT_TOKEN_PATH, TOKEN_LENGTH
 from dapsenv.utils import randomString
 
+
 def getToken():
     """Reads the client token
 
     :return string: client token
     """
-
     token = ""
 
     with open(CLIENT_TOKEN_PATH, "r") as token_file:
@@ -33,12 +33,12 @@ def getToken():
 
     return token
 
+
 def regenerateToken():
     """Regenerates the client token
 
     :param string: new client token
     """
-
     token = randomString(TOKEN_LENGTH)
 
     with open(CLIENT_TOKEN_PATH, "w") as token_file:

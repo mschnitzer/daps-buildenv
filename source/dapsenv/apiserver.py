@@ -24,8 +24,9 @@ import dapsenv.api.viewlog as APIViewLog
 import json
 import threading
 import websockets
-from dapsenv.exceptions import APIInvalidRequestException, APIUnauthorizedTokenException, \
-                               APIErrorException
+from dapsenv.exceptions import (APIInvalidRequestException, APIUnauthorizedTokenException,
+                                APIErrorException)
+
 
 class APIServer:
 
@@ -72,11 +73,11 @@ class APIServer:
                     data = json.loads(data)
 
                     # check for correct data packets
-                    if not "id" in data:
+                    if "id" not in data:
                         yield from websocket.close()
                         return
                     else:
-                        response = { "id": data["id"] }
+                        response = {"id": data["id"]}
 
                         # status query
                         try:
@@ -101,7 +102,7 @@ class APIServer:
                         except APIUnauthorizedTokenException:
                             response.update({"error": "Access denied! Unauthorized token!"})
                         except APIErrorException as e:
-                            response.update({ "error": e.message })
+                            response.update({"error": e.message})
 
                         # send response
                         yield from websocket.send(json.dumps(response))

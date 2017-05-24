@@ -23,6 +23,7 @@ from http.server import BaseHTTPRequestHandler
 
 _logs_pattern = re.compile("^\/logs\/([a-zA-Z0-9\_\-]+)$")
 
+
 class LogServer(BaseHTTPRequestHandler):
 
     def do_HEAD(s):

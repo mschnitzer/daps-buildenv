@@ -27,6 +27,7 @@ from lxml.etree import XMLSyntaxError
 
 _dcfiles_pattern = re.compile("DC\-[a-zA-Z0-9\-_]+")
 
+
 class AutoBuildConfig:
 
     def __init__(self, path):
@@ -58,7 +59,7 @@ class AutoBuildConfig:
 
         data = OrderedDict()
         projects = self._tree.findall("set")
-        
+
         for index, project in enumerate(projects):
             project_name = project.attrib["id"]
             dc_files = project.find("dcfiles").text

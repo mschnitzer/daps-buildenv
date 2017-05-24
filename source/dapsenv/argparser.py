@@ -20,6 +20,7 @@ import argparse
 import dapsenv.configmanager as configmanager
 from dapsenv.general import __version__
 
+
 class ArgParser:
 
     def __init__(self, args):
@@ -67,22 +68,22 @@ class ArgParser:
         config_group = cmd.add_mutually_exclusive_group(required=True)
 
         config_group.add_argument(
-            "--global", "-g", action="store_true", help="Specifies to use the global " \
+            "--global", "-g", action="store_true", help="Specifies to use the global "
             "configuration which is stored in the configuration directory /etc."
         )
 
         config_group.add_argument(
-            "--user", "-u", action="store_true", help="Specifies to use the user configuration " \
+            "--user", "-u", action="store_true", help="Specifies to use the user configuration "
             "which is stored in the home directory of the current user."
         )
 
         config_group.add_argument(
-            "--own", "-o", action="store_true", help="Specifies to use an own specified " \
+            "--own", "-o", action="store_true", help="Specifies to use an own specified "
             "configuration which needs to be specified by --path"
         )
 
         config_group.add_argument(
-            "--generate", action="store_true", help="Generates a configuration file. The " \
+            "--generate", action="store_true", help="Generates a configuration file. The "
             "must be set via --path."
         )
 
@@ -96,7 +97,7 @@ class ArgParser:
 
         cmd.add_argument(
             "--property", "-p", action="store",
-            help="Specifies a property from the config file. If no value is set with --value, " \
+            help="Specifies a property from the config file. If no value is set with --value, "
             "only the current value of the property will be print on the command line."
         )
 
@@ -116,27 +117,27 @@ class ArgParser:
             pass
 
         cmd = self.cmdSubParser.add_parser(
-            "daemon", aliases=["d"], help="This command starts a daemon which takes care of " \
+            "daemon", aliases=["d"], help="This command starts a daemon which takes care of "
             "the documentation building process."
         )
 
         cmd.add_argument(
-            "--use-irc", "-i", action="store_true", help="Connects to the IRC server what is " \
+            "--use-irc", "-i", action="store_true", help="Connects to the IRC server what is "
             "configured in the configuration file."
         )
 
         cmd.add_argument(
-            "--use-logserver", "-l", action="store_true", help="Starts an HTTP server what " \
+            "--use-logserver", "-l", action="store_true", help="Starts an HTTP server what "
             "provides access to build log files."
         )
 
         cmd.add_argument(
-            "--logserver-ip", action="store", default=logmanager_ip, help="The IP address the log " \
+            "--logserver-ip", action="store", default=logmanager_ip, help="The IP address the log "
             "server should listen to."
         )
 
         cmd.add_argument(
-            "--logserver-port", action="store", default=logserver_port, help="The IP address the log " \
+            "--logserver-port", action="store", default=logserver_port, help="The IP address the log "
             "server should listen to."
         )
 
@@ -145,18 +146,18 @@ class ArgParser:
         )
 
         cmd.add_argument(
-            "--debug", "-d", action="store_true", help="Useful for developer to get more " \
+            "--debug", "-d", action="store_true", help="Useful for developer to get more "
             "information about the Daemon process."
         )
 
         cmd.add_argument(
-            "--autobuild-config", "-a", action="store", help="Specifies a path to the " \
+            "--autobuild-config", "-a", action="store", help="Specifies a path to the "
             "autobuild config file. This overrides the value in configuration files."
         )
 
         cmd.add_argument(
-            "--development", action="store_true", help="Not relevant for the normal user and " \
-            "should only be used by developers. This option forbids to start docker containers. " \
+            "--development", action="store_true", help="Not relevant for the normal user and "
+            "should only be used by developers. This option forbids to start docker containers. "
             "This is useful during development."
         )
 
@@ -232,7 +233,7 @@ class ArgParser:
             pass
 
         cmd = self.cmdSubParser.add_parser(
-            "project-list", aliases=["pl"], help="Retrieves a list of all projects on a " \
+            "project-list", aliases=["pl"], help="Retrieves a list of all projects on a "
             "DapsEnv instance."
         )
 
@@ -252,29 +253,29 @@ class ArgParser:
         )
 
         cmd.add_argument(
-            "--regenerate-token", "-r", action="store_true", help="Forces a regeneration of the " \
+            "--regenerate-token", "-r", action="store_true", help="Forces a regeneration of the "
             "client token."
         )
 
     def addTokenAuthorizeCommand(self):
         cmd = self.cmdSubParser.add_parser(
-            "token-authorize", aliases=["ta"], help="Authorizes one or more tokens for Daemon " \
+            "token-authorize", aliases=["ta"], help="Authorizes one or more tokens for Daemon "
             "commands."
         )
 
         cmd.add_argument(
-            "tokens", nargs="+", metavar="TOKENS", help="A list (separated by spaces) of tokens " \
+            "tokens", nargs="+", metavar="TOKENS", help="A list (separated by spaces) of tokens "
             "to authorize."
         )
 
     def addTokenDeauthorizeCommand(self):
         cmd = self.cmdSubParser.add_parser(
-            "token-deauthorize", aliases=["td"], help="Deauthorizes one or more tokens from " \
+            "token-deauthorize", aliases=["td"], help="Deauthorizes one or more tokens from "
             "issuing Daemon commands."
         )
 
         cmd.add_argument(
-            "tokens", nargs="+", metavar="TOKENS", help="A list (separated by spaces) of tokens " \
+            "tokens", nargs="+", metavar="TOKENS", help="A list (separated by spaces) of tokens "
             "to deauthorize."
         )
 

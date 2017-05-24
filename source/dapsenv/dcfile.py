@@ -20,13 +20,14 @@ import os
 import re
 from dapsenv.exceptions import DCFileMAINNotFoundException
 
+
 class DCFile:
     def __init__(self, path):
         self._path = path
         self._main = None
         self._main_path = None
         self._rootid = None
-        
+
         self._search_pattern_main = re.compile("^MAIN\=(.*)$")
         self._search_pattern_rootid = re.compile("^ROOTID\=(.*)$")
 
@@ -50,7 +51,7 @@ class DCFile:
     def _getValue(self, line):
         line = line.strip("\n")
         pos = line.find("=")
-        line = line[pos+1:]
+        line = line[pos + 1:]
 
         if line[0] == '"':
             line = line[1:]

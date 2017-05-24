@@ -24,6 +24,7 @@ from dapsenv.exceptions import TokenNotAuthorizedException
 from dapsenv.general import DAEMON_AUTH_PATH
 from dapsenv.shellcolors import red
 
+
 class Tokendeauthorize(Action):
     def __init__(self):
         pass

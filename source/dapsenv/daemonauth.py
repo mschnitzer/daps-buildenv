@@ -18,11 +18,12 @@
 
 import threading
 from copy import copy
-from dapsenv.exceptions import AuthFileNotInitializedException, AuthFileParseException, \
-                               InvalidTokenLengthException, InvalidTokenCharsException, \
-                               TokenAlreadyAuthorizedException, TokenNotAuthorizedException
+from dapsenv.exceptions import (AuthFileNotInitializedException, AuthFileParseException,
+                                InvalidTokenLengthException, InvalidTokenCharsException,
+                                TokenAlreadyAuthorizedException, TokenNotAuthorizedException)
 from dapsenv.general import TOKEN_LENGTH, TOKEN_PATTERN
 from lxml import etree
+
 
 class DaemonAuth:
 
@@ -61,7 +62,7 @@ class DaemonAuth:
             self._tokens_lock.release()
             raise TokenAlreadyAuthorizedException(token)
 
-        token_elem = etree.Element("token", { "token": token })
+        token_elem = etree.Element("token", {"token": token})
         self._tokens_element.append(token_elem)
         self._save()
 
@@ -113,9 +114,10 @@ class DaemonAuth:
                 raise AuthFileParseException(self._file_name, "No <tokens> element found.")
 
             for token in self._tokens_element:
-                if not "token" in token.attrib:
-                    raise AuthFileParseException(self._file_name, "'token' attribute in 'token' " \
-                        "element is missing!")
+                if "token" not in token.attrib:
+                    raise AuthFileParseException(self._file_name,
+                                                 "'token' attribute in 'token' "
+                                                 "element is missing!")
 
                 self._tokens.append(token.attrib["token"])
 

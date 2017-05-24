@@ -35,18 +35,19 @@ from dapsenv.autobuildconfig import AutoBuildConfig, _dcfiles_pattern
 from dapsenv.daemonauth import DaemonAuth
 from dapsenv.docker import Container
 from dapsenv.dockerregistry import is_image_imported
-from dapsenv.exceptions import AutoBuildConfigurationErrorException, \
-                               UserNotInDockerGroupException, GitInvalidRepoException, \
-                               DockerImageMissingException, InvalidRootIDException, \
-                               GitErrorException
+from dapsenv.exceptions import (AutoBuildConfigurationErrorException,
+                                UserNotInDockerGroupException, GitInvalidRepoException,
+                                DockerImageMissingException, InvalidRootIDException,
+                                GitErrorException)
 from dapsenv.exitcodes import E_INVALID_GIT_REPO, E_DOCKER_IMAGE_MISSING
-from dapsenv.general import DAEMON_DEFAULT_INTERVAL, BUILDS_DIR, DAEMON_DEFAULT_MAX_CONTAINERS, \
-                            API_SERVER_DEFAULT_PORT, LOG_DIR, CONTAINER_IMAGE, DAEMON_AUTH_PATH
+from dapsenv.general import (DAEMON_DEFAULT_INTERVAL, BUILDS_DIR, DAEMON_DEFAULT_MAX_CONTAINERS,
+                             API_SERVER_DEFAULT_PORT, LOG_DIR, CONTAINER_IMAGE, DAEMON_AUTH_PATH)
 from dapsenv.ircbot import IRCBot
 from dapsenv.logmanager import log
 from dapsenv.logserver import LogServer
 from http.server import HTTPServer
 from socket import gethostname
+
 
 class Daemon(Action):
     def __init__(self):
@@ -55,7 +56,6 @@ class Daemon(Action):
     def execute(self, args):
         """@see Action.execute()
         """
-
         self._args = args
 
         # load settings and prepare daemon
@@ -83,7 +83,6 @@ class Daemon(Action):
     def _preperation(self):
         """Loads all settings and prepares the daemon
         """
-
         self._useirc = self._args["use_irc"]
         self._noout = self._args["no_output"]
         self._debug = self._args["debug"]
@@ -118,16 +117,14 @@ class Daemon(Action):
         else:
             self._autoBuildConfigFile = configmanager.get_prop("daps_autobuild_config")
 
-        self.autoBuildConfig = self.loadAutoBuildConfig(
-            self._autoBuildConfigFile
-        )
+        self.autoBuildConfig = self.loadAutoBuildConfig(self._autoBuildConfigFile)
 
         # fetch all projects
         try:
             self.projects = self.autoBuildConfig.fetchProjects()
         except GitInvalidRepoException as e:
-            log.error("Configuration error in auto build config '%s'! %s", \
-                self._autoBuildConfigFile, e.message)
+            log.error("Configuration error in auto build config '%s'! %s",
+                      self._autoBuildConfigFile, e.message)
             sys.exit(E_INVALID_GIT_REPO)
 
     def _checkDockerImage(self):
@@ -210,7 +207,7 @@ class Daemon(Action):
 
                         # start thread
                         thread.start()
-                        
+
                         # update amount of running builds
                         self._daemon_info_lock.acquire()
 
@@ -236,7 +233,7 @@ class Daemon(Action):
         # check and refresh all repositories
         self._prepare_build_task()
 
-        self._print("Next scheduled check: {}".format(time.ctime(time.time()+self._interval)))
+        self._print("Next scheduled check: {}".format(time.ctime(time.time() + self._interval)))
 
     def _prepare_build_task(self):
         """Goes through all specified repositories and updates those
@@ -292,14 +289,13 @@ class Daemon(Action):
 
                     if build:
                         self._daemon_info_lock.acquire()
-                        self._daemon_info["jobs"].append({
-                            "project": copy.copy(self.projects[i]),
-                            "dc_file": dc_file[:],
-                            "commit": commit[:],
-                            "status": 0,
-                            "container_id": "",
-                            "time_started": 0
-                        })
+                        self._daemon_info["jobs"].append({"project": copy.copy(self.projects[i]),
+                                                          "dc_file": dc_file[:],
+                                                          "commit": commit[:],
+                                                          "status": 0,
+                                                          "container_id": "",
+                                                          "time_started": 0
+                                                          })
 
                         self._daemon_info["scheduled_builds"] += 1
                         self._daemon_info_lock.release()
@@ -338,7 +334,7 @@ class Daemon(Action):
 
         for f in build_formats:
             # building the documentation
-            #pdb.set_trace()
+            # pdb.set_trace()
             result = container.buildDocumentation(dc_file, f)
 
             archive = result["archive_name"]
@@ -358,7 +354,7 @@ class Daemon(Action):
                 # remove the daps command from the result dictionary, if debug mode
                 # is disabled
                 del result["dapscmd"]
-    
+
             if result["build_status"]:
                 # generate a build info file for the documentation archive
                 container.fileCreate("/tmp/build_info.json", json.dumps(result))
@@ -562,12 +558,10 @@ class Daemon(Action):
 
         :param string path: Specifies the path where the file is stored
         """
-
         if not path:
             raise AutoBuildConfigurationErrorException()
 
         return AutoBuildConfig(path)
-
 
     def loadDaemonSettings(self):
         """Loads the settings for the daemon

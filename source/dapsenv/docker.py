@@ -21,11 +21,12 @@ import shlex
 import subprocess
 import time
 from collections import OrderedDict
-from dapsenv.exceptions import ContainerNotSpawnedException, ContainerAlreadySpawnedException, \
-                               ContainerPreparationMissingException, \
-                               UnexpectedStderrOutputException, ContainerFileCreationFailed
+from dapsenv.exceptions import (ContainerNotSpawnedException, ContainerAlreadySpawnedException,
+                                ContainerPreparationMissingException,
+                                UnexpectedStderrOutputException, ContainerFileCreationFailed)
 from dapsenv.general import CONTAINER_REPO_DIR, CONTAINER_IMAGE, SOURCE_DIR, HOME_DIR
 from random import randint
+
 
 class Container:
 
@@ -209,7 +210,7 @@ class Container:
         if not self._spawned:
             raise ContainerNotSpawnedException()
 
-        tmp_file_name = "container_file_creation_{}".format(randint(10000000,99999999))
+        tmp_file_name = "container_file_creation_{}".format(randint(10000000, 99999999))
         tmp_file_path = "{}/tmp/{}".format(HOME_DIR, tmp_file_name)
 
         # write tmp file

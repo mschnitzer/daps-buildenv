@@ -16,7 +16,6 @@
 # To contact SUSE about this file by physical or electronic mail,
 # you may find current contact information at www.suse.com
 
+
 def handle(data, daemon):
-    return {
-        "projects": daemon.getProjectNames(),
-    }
+    return {"projects": daemon.getProjectNames()}

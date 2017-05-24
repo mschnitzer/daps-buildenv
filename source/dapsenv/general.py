@@ -23,46 +23,46 @@ from os import path
 __version__ = "1.0.0"
 
 # the default pull interval for the daemon
-DAEMON_DEFAULT_INTERVAL=300
+DAEMON_DEFAULT_INTERVAL = 300
 
 # max docker containers default value
-DAEMON_DEFAULT_MAX_CONTAINERS=15
+DAEMON_DEFAULT_MAX_CONTAINERS = 15
 
 # the directory where a repository should be copied in a container
-CONTAINER_REPO_DIR="/tmp/build"
+CONTAINER_REPO_DIR = "/tmp/build"
 
 # the name of the docker image
-CONTAINER_IMAGE="mschnitzer/dapsenv"
+CONTAINER_IMAGE = "mschnitzer/dapsenv"
 
 # source directory of this python project
-SOURCE_DIR=path.dirname(path.realpath(__file__))
+SOURCE_DIR = path.dirname(path.realpath(__file__))
 
 # home directory
-HOME_DIR="{}/.dapsenv".format(path.expanduser("~"))
+HOME_DIR = "{}/.dapsenv".format(path.expanduser("~"))
 
 # error log directory
-LOG_DIR="{}/logs".format(HOME_DIR)
+LOG_DIR = "{}/logs".format(HOME_DIR)
 
 # tmp directory
-TMP_DIR="{}/tmp".format(HOME_DIR)
+TMP_DIR = "{}/tmp".format(HOME_DIR)
 
 # tmp directory
-BUILDS_DIR="{}/builds".format(HOME_DIR)
+BUILDS_DIR = "{}/builds".format(HOME_DIR)
 
 # templates location
-TEMPLATE_PATH="{}/templates".format(SOURCE_DIR)
+TEMPLATE_PATH = "{}/templates".format(SOURCE_DIR)
 
 # daemon-auth.xml file location
-DAEMON_AUTH_PATH="{}/daemon-auth.xml".format(HOME_DIR)
+DAEMON_AUTH_PATH = "{}/daemon-auth.xml".format(HOME_DIR)
 
 # token file
-CLIENT_TOKEN_PATH="{}/token".format(HOME_DIR)
+CLIENT_TOKEN_PATH = "{}/token".format(HOME_DIR)
 
 # api server default port
-API_SERVER_DEFAULT_PORT=5555
+API_SERVER_DEFAULT_PORT = 5555
 
 # max token length
-TOKEN_LENGTH=32
+TOKEN_LENGTH = 32
 
 # token validation pattern
 TOKEN_PATTERN = re.compile("^[a-zA-Z0-9]+$")

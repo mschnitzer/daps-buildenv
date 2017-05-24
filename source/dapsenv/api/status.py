@@ -16,14 +16,14 @@
 # To contact SUSE about this file by physical or electronic mail,
 # you may find current contact information at www.suse.com
 
+
 def handle(data, daemon):
     jobs = daemon.getJobList()
 
     running_builds = sum(1 for j in jobs if j["status"] == 1)
     scheduled_builds = sum(1 for j in jobs if j["status"] == 0)
 
-    return {
-        "running_builds": running_builds,
-        "scheduled_builds": scheduled_builds,
-        "jobs": jobs
-    }
+    return {"running_builds": running_builds,
+            "scheduled_builds": scheduled_builds,
+            "jobs": jobs
+            }

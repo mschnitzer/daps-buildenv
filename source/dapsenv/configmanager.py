@@ -19,12 +19,13 @@
 import re
 import shutil
 import os
-from dapsenv.exceptions import InvalidConfigTypeException, ConfigFilePermissionErrorException, \
-                               ConfigFileNotCreatedException, ConfigFileAlreadyExistsException, \
-                               ConfigFileCreationPermissionErrorException
+from dapsenv.exceptions import (InvalidConfigTypeException, ConfigFilePermissionErrorException,
+                                ConfigFileNotCreatedException, ConfigFileAlreadyExistsException,
+                                ConfigFileCreationPermissionErrorException)
 from os.path import expanduser, isfile
 
 _search_pattern = re.compile("(?!#)(?P<key>[\w\d]+)\s*=\s*(?P<value>.*)")
+
 
 def get_prop(prop, config_type="", config_path=""):
     """Returns the value of a property - should be used from other modules only!
@@ -35,7 +36,6 @@ def get_prop(prop, config_type="", config_path=""):
                                is set in config_type)
     :return string: The value of the property or None
     """
-
     paths = []
 
     if len(config_type):
@@ -49,6 +49,7 @@ def get_prop(prop, config_type="", config_path=""):
 
     return get_property_value(prop, paths)
 
+
 def set_prop(prop, value, config_type="", config_path=""):
     """Sets the value of a property - should be used from other modules only!
 
@@ -58,9 +59,9 @@ def set_prop(prop, value, config_type="", config_path=""):
     :param string config_path: Sets the path for a configuration file (only required if "own"
                                is set in config_type)
     """
-
     path = get_config_path(config_type, config_path)
     set_property_value(prop, value, path)
+
 
 def get_config_path(config_type, config_path=""):
     """Resolves a path for a config type
@@ -69,33 +70,32 @@ def get_config_path(config_type, config_path=""):
     :param string config_path: Will be returned if "own" is set as config_type
     :return string: a config path
     """
-
-    data = {
-        "own": config_path,
-        "user": get_user_config_path(),
-        "global": get_global_config_path()
-    }
+    data = {"own": config_path,
+            "user": get_user_config_path(),
+            "global": get_global_config_path()
+            }
 
     try:
         return data[config_type]
     except KeyError:
         raise InvalidConfigTypeException()
 
+
 def get_global_config_path():
     """Returns the path of the global configuration file
 
     :return string: Path to the global configuration file
     """
-
     return "/etc/dapsenv/dapsenv.conf"
+
 
 def get_user_config_path():
     """Returns the path of the user configuration file
 
     :return string: Path to the user configuration file
     """
-
     return "{}/.dapsenv/dapsenv.conf".format(expanduser("~"))
+
 
 def get_property_value(prop, paths):
     """Returns the value of a property - should only be used internally!
@@ -105,9 +105,9 @@ def get_property_value(prop, paths):
     :return string|None: The value of the given property or None if no appropriate property was
                          found
     """
-
     data = parse_config(paths)
     return data.get(prop)
+
 
 def set_property_value(prop, value, path):
     """Sets a value for a property - should only be used internally!
@@ -115,7 +115,6 @@ def set_property_value(prop, value, path):
     :param string prop: Name of the property
     :param string path: The path to the configuration file
     """
-
     if not isfile(path):
         raise ConfigFileNotCreatedException(path)
 
@@ -153,6 +152,7 @@ def set_property_value(prop, value, path):
     except PermissionError:
         raise ConfigFilePermissionErrorException(path)
 
+
 def parse_config(paths):
     """Parses all given configuration files and returns their content
 
@@ -180,6 +180,7 @@ def parse_config(paths):
         return data
     except PermissionError:
         raise ConfigFilePermissionErrorException(path)
+
 
 def generate_config(path, force_overwrite=False):
     """Generates a configuration file at the desired location

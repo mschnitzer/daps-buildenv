@@ -21,12 +21,13 @@ import sys
 import json
 import websockets
 from dapsenv.actions.action import Action
-from dapsenv.exitcodes import E_API_SERVER_CONN_FAILED, E_API_SERVER_CLOSED_CONNECTION, \
-                              E_API_SERVER_INVALID_DATA_SENT
+from dapsenv.exitcodes import (E_API_SERVER_CONN_FAILED, E_API_SERVER_CLOSED_CONNECTION,
+                               E_API_SERVER_INVALID_DATA_SENT)
 from dapsenv.logmanager import log
 from datetime import datetime
 from prettytable import PrettyTable
 from socket import gaierror
+
 
 class Projectlist(Action):
     def __init__(self):
@@ -35,7 +36,6 @@ class Projectlist(Action):
     def execute(self, args):
         """@see Action.execute()
         """
-
         self._args = args
         self._ip = self._args["ip"]
         self._port = self._args["port"]
@@ -52,7 +52,7 @@ class Projectlist(Action):
             ws = yield from websockets.connect("ws://{}:{}/".format(self._ip, self._port))
 
             # retrieve project list
-            yield from ws.send(json.dumps({ "id": 3 }))
+            yield from ws.send(json.dumps({"id": 3}))
 
             # fetch server message
             res = yield from ws.recv()
@@ -66,7 +66,7 @@ class Projectlist(Action):
 
                     first = False
                     print("{}:".format(project))
-                    
+
                     for dc_file in dc_files:
                         print("\t{}".format(dc_file))
             except ValueError:
@@ -74,8 +74,8 @@ class Projectlist(Action):
                 self._error = E_API_SERVER_INVALID_DATA_SENT
         except (ConnectionRefusedError, gaierror, OSError) as e:
             if "Connect call failed" in e.strerror or "Name or service not known" in e.strerror:
-                log.error("Connection to API server failed. Check if the IP address and the " \
-                    "port are correct and if the firewall port is open.")
+                log.error("Connection to API server failed. Check if the IP address and the "
+                          "port are correct and if the firewall port is open.")
                 self._error = E_API_SERVER_CONN_FAILED
         except websockets.exceptions.ConnectionClosed:
             log.error("The API server has closed the connection.")

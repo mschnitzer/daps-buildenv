@@ -19,11 +19,12 @@
 import dapsenv.configmanager as configmanager
 import sys
 from dapsenv.actions.action import Action
-from dapsenv.exceptions import ConfigPropertyNotFoundException, InvalidCommandLineException, \
-                               ConfigFileAlreadyExistsException, \
-                               ConfigFileCreationPermissionErrorException
+from dapsenv.exceptions import (ConfigPropertyNotFoundException, InvalidCommandLineException,
+                                ConfigFileAlreadyExistsException,
+                                ConfigFileCreationPermissionErrorException)
 from dapsenv.exitcodes import E_CONFIG_FILE_PERMISSION_DENIED, E_CONFIG_FILE_ALREADY_CREATED
 from dapsenv.logmanager import log
+
 
 class Config(Action):
     def __init__(self):
@@ -82,8 +83,8 @@ class Config(Action):
         try:
             configmanager.generate_config(path, self._args["force"])
         except ConfigFileAlreadyExistsException as e:
-            log.error("There is already a file called 'dapsenv.conf' in the directory '%s'. " \
-                "Use --force to overwrite that file.", e.path)
+            log.error("There is already a file called 'dapsenv.conf' in the directory '%s'. "
+                      "Use --force to overwrite that file.", e.path)
             sys.exit(E_CONFIG_FILE_ALREADY_CREATED)
         except ConfigFileCreationPermissionErrorException as e:
             log.error("Could not create config file at '%s'. Permission denied.", e.path)
@@ -96,21 +97,18 @@ class Config(Action):
         """
 
         if (self._configtype == "own" or self._args["generate"]) and not self._path:
-            raise InvalidCommandLineException("You need to specify a path with --path for the " \
-                "options --own and --generate.")
+            raise InvalidCommandLineException("You need to specify a path with --path for the "
+                                              "options --own and --generate.")
         elif not self._configtype == "own" and not self._args["generate"] and self._path:
-            raise InvalidCommandLineException("Option --path is only required in combination " \
-                "with --own or --generate.")
+            raise InvalidCommandLineException("Option --path is only required in combination "
+                                              "with --own or --generate.")
 
-        if (self._args["global"] or self._args["user"] or self._args["own"]) and not \
-            self._args["property"]:
+        if (self._args["global"] or self._args["user"] or self._args["own"]) and not self._args["property"]:
             raise InvalidCommandLineException("You need to specify --property.")
-
 
     def _determine_config_type(self):
         """Determines the configuration type
         """
-
         self._configtype = None
 
         if self._args["global"]:

@@ -23,8 +23,9 @@ from dapsenv.autobuildconfig import _dcfiles_pattern
 from dapsenv.exceptions import APIInvalidRequestException, APIErrorException
 from dapsenv.general import LOG_DIR
 
+
 def handle(data, daemon):
-    if not "dc_file" in data or not "format" in data:
+    if "dc_file" not in data or "format" not in data:
         raise APIInvalidRequestException()
 
     dc_file = data["dc_file"]
@@ -34,12 +35,9 @@ def handle(data, daemon):
         raise APIErrorException("The DC-File name is not valid!")
 
     if format_name != "html" and format_name != "single_html" and format_name != "pdf":
-        raise APIErrorException("Format is not valid. Please choose between: html, single_html, " \
-            "and pdf")
+        raise APIErrorException("Format is not valid. Please choose between: html, single_html, and pdf")
 
-    pattern = re.compile("^build\_fail\_([a-zA-Z0-9\-]+)\_{}\_([0-9]+)\.log$".format(
-        format_name
-    ))
+    pattern = re.compile("^build\_fail\_([a-zA-Z0-9\-]+)\_{}\_([0-9]+)\.log$".format(format_name))
 
     results = []
     files = os.listdir(LOG_DIR)
@@ -60,6 +58,4 @@ def handle(data, daemon):
         with open("{}/build_fail_{}_{}_{}.log".format(LOG_DIR, dc_file, format_name, results[0]), "r") as log_file:
             content = log_file.read()
 
-    return {
-        "log": b64encode(content.encode("ascii")).decode("ascii")
-    }
+    return {"log": b64encode(content.encode("ascii")).decode("ascii")}
